@@ -1,0 +1,387 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.8.0
+  creationTimestamp: null
+  name: projects.project.gitlab.jet.crossplane.io
+spec:
+  group: project.gitlab.jet.crossplane.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - gitlabjet
+    kind: Project
+    listKind: ProjectList
+    plural: projects
+    singular: project
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: Project is the Schema for the Projects API
+        properties:
+          apiVersion:
+            description: 'APIVersion defines the versioned schema of this representation
+              of an object. Servers should convert recognized schemas to the latest
+              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource this
+              object represents. Servers may infer this from the endpoint the client
+              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: ProjectSpec defines the desired state of Project
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: DeletionPolicy specifies what will happen to the underlying
+                  external when this managed resource is deleted - either "Delete"
+                  or "Orphan" the external resource.
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  allowMergeOnSkippedPipeline:
+                    description: Set to true if you want to treat skipped pipelines
+                      as if they finished with success.
+                    type: boolean
+                  approvalsBeforeMerge:
+                    description: Number of merge request approvals required for merging.
+                      Default is 0.
+                    type: number
+                  archiveOnDestroy:
+                    description: Set to `true` to archive the project instead of deleting
+                      on destroy. If set to `true` it will entire omit the `DELETE`
+                      operation.
+                    type: boolean
+                  archived:
+                    description: Whether the project is in read-only mode (archived).
+                      Repositories can be archived/unarchived by toggling this parameter.
+                    type: boolean
+                  buildCoverageRegex:
+                    description: Test coverage parsing for the project.
+                    type: string
+                  ciConfigPath:
+                    description: Custom Path to CI config file.
+                    type: string
+                  ciForwardDeploymentEnabled:
+                    description: When a new deployment job starts, skip older deployment
+                      jobs that are still pending.
+                    type: boolean
+                  containerRegistryEnabled:
+                    description: Enable container registry for the project.
+                    type: boolean
+                  defaultBranch:
+                    description: The default branch for the project.
+                    type: string
+                  description:
+                    description: A description of the project.
+                    type: string
+                  groupWithProjectTemplatesId:
+                    description: For group-level custom templates, specifies ID of
+                      group from which all the custom project templates are sourced.
+                      Leave empty for instance-level templates. Requires use_custom_template
+                      to be true (enterprise edition).
+                    type: number
+                  importUrl:
+                    description: Git URL to a repository to be imported.
+                    type: string
+                  initializeWithReadme:
+                    description: Create main branch with first commit containing a
+                      README.md file.
+                    type: boolean
+                  issuesEnabled:
+                    description: Enable issue tracking for the project.
+                    type: boolean
+                  issuesTemplate:
+                    description: Sets the template for new issues in the project.
+                    type: string
+                  lfsEnabled:
+                    description: Enable LFS for the project.
+                    type: boolean
+                  mergeMethod:
+                    description: Set to `ff` to create fast-forward merges
+                    type: string
+                  mergePipelinesEnabled:
+                    description: Enable or disable merge pipelines.
+                    type: boolean
+                  mergeRequestsEnabled:
+                    description: Enable merge requests for the project.
+                    type: boolean
+                  mergeRequestsTemplate:
+                    description: Sets the template for new merge requests in the project.
+                    type: string
+                  mergeTrainsEnabled:
+                    description: Enable or disable merge trains. Requires `merge_pipelines_enabled`
+                      to be set to `true` to take effect.
+                    type: boolean
+                  mirror:
+                    description: Enable project pull mirror.
+                    type: boolean
+                  mirrorOverwritesDivergedBranches:
+                    description: Enable overwrite diverged branches for a mirrored
+                      project.
+                    type: boolean
+                  mirrorTriggerBuilds:
+                    description: Enable trigger builds on pushes for a mirrored project.
+                    type: boolean
+                  name:
+                    description: The name of the project.
+                    type: string
+                  namespaceId:
+                    description: The namespace (group or user) of the project. Defaults
+                      to your user.
+                    type: number
+                  onlyAllowMergeIfAllDiscussionsAreResolved:
+                    description: Set to true if you want allow merges only if all
+                      discussions are resolved.
+                    type: boolean
+                  onlyAllowMergeIfPipelineSucceeds:
+                    description: Set to true if you want allow merges only if a pipeline
+                      succeeds.
+                    type: boolean
+                  onlyMirrorProtectedBranches:
+                    description: Enable only mirror protected branches for a mirrored
+                      project.
+                    type: boolean
+                  packagesEnabled:
+                    description: Enable packages repository for the project.
+                    type: boolean
+                  pagesAccessLevel:
+                    description: Enable pages access control
+                    type: string
+                  path:
+                    description: The path of the repository.
+                    type: string
+                  pipelinesEnabled:
+                    description: Enable pipelines for the project.
+                    type: boolean
+                  printingMergeRequestLinkEnabled:
+                    description: Show link to create/view merge request when pushing
+                      from the command line
+                    type: boolean
+                  pushRules:
+                    description: Push rules for the project.
+                    items:
+                      properties:
+                        authorEmailRegex:
+                          description: All commit author emails must match this regex,
+                            e.g. `@my-company.com$`.
+                          type: string
+                        branchNameRegex:
+                          description: All branch names must match this regex, e.g.
+                            `(feature|hotfix)\/*`.
+                          type: string
+                        commitCommitterCheck:
+                          description: Users can only push commits to this repository
+                            that were committed with one of their own verified emails.
+                          type: boolean
+                        commitMessageNegativeRegex:
+                          description: No commit message is allowed to match this
+                            regex, for example `ssh\:\/\/`.
+                          type: string
+                        commitMessageRegex:
+                          description: All commit messages must match this regex,
+                            e.g. `Fixed \d+\..*`.
+                          type: string
+                        denyDeleteTag:
+                          description: Deny deleting a tag.
+                          type: boolean
+                        fileNameRegex:
+                          description: All commited filenames must not match this
+                            regex, e.g. `(jar|exe)$`.
+                          type: string
+                        maxFileSize:
+                          description: Maximum file size (MB).
+                          type: number
+                        memberCheck:
+                          description: Restrict commits by author (email) to existing
+                            GitLab users.
+                          type: boolean
+                        preventSecrets:
+                          description: GitLab will reject any files that are likely
+                            to contain secrets.
+                          type: boolean
+                        rejectUnsignedCommits:
+                          description: Reject commit when it’s not signed through
+                            GPG.
+                          type: boolean
+                      type: object
+                    type: array
+                  removeSourceBranchAfterMerge:
+                    description: Enable `Delete source branch` option by default for
+                      all new merge requests.
+                    type: boolean
+                  requestAccessEnabled:
+                    description: Allow users to request member access.
+                    type: boolean
+                  sharedRunnersEnabled:
+                    description: Enable shared runners for this project.
+                    type: boolean
+                  snippetsEnabled:
+                    description: Enable snippets for the project.
+                    type: boolean
+                  squashOption:
+                    description: Squash commits when merge request. Valid values are
+                      `never`, `always`, `default_on`, or `default_off`. The default
+                      value is `default_off`. [GitLab >= 14.1]
+                    type: string
+                  tags:
+                    description: Tags (topics) of the project.
+                    items:
+                      type: string
+                    type: array
+                  templateName:
+                    description: When used without use_custom_template, name of a
+                      built-in project template. When used with use_custom_template,
+                      name of a custom project template. This option is mutually exclusive
+                      with `template_project_id`.
+                    type: string
+                  templateProjectId:
+                    description: When used with use_custom_template, project ID of
+                      a custom project template. This is preferable to using template_name
+                      since template_name may be ambiguous (enterprise edition). This
+                      option is mutually exclusive with `template_name`.
+                    type: number
+                  useCustomTemplate:
+                    description: Use either custom instance or group (with group_with_project_templates_id)
+                      project template (enterprise edition).
+                    type: boolean
+                  visibilityLevel:
+                    description: Set to `public` to create a public project.
+                    type: string
+                  wikiEnabled:
+                    description: Enable wiki for the project.
+                    type: boolean
+                required:
+                - name
+                type: object
+              providerConfigRef:
+                default:
+                  name: default
+                description: ProviderConfigReference specifies how the provider that
+                  will be used to create, observe, update, and delete this managed
+                  resource should be configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                required:
+                - name
+                type: object
+              providerRef:
+                description: 'ProviderReference specifies the provider that will be
+                  used to create, observe, update, and delete this managed resource.
+                  Deprecated: Please use ProviderConfigReference, i.e. `providerConfigRef`'
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: WriteConnectionSecretToReference specifies the namespace
+                  and name of a Secret to which any connection details for this managed
+                  resource should be written. Connection details frequently include
+                  the endpoint, username, and password required to connect to the
+                  managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+          status:
+            description: ProjectStatus defines the observed state of Project.
+            properties:
+              atProvider:
+                properties:
+                  httpUrlToRepo:
+                    type: string
+                  id:
+                    type: string
+                  pathWithNamespace:
+                    type: string
+                  sshUrlToRepo:
+                    type: string
+                  webUrl:
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: LastTransitionTime is the last time this condition
+                        transitioned from one status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: A Message containing details about this condition's
+                        last transition from one status to another, if any.
+                      type: string
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: Type of this condition. At most one of each condition
+                        type may apply to a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []

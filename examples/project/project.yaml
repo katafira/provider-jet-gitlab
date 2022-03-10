@@ -1,0 +1,10 @@
+apiVersion: project.gitlab.jet.crossplane.io/v1alpha1
+kind: Project
+metadata:
+  name: first-project-sample-tf
+spec:
+  forProvider:
+    name: actual-first-project-sample-name
+    description: "My 1st project"
+  providerConfigRef:
+    name: default

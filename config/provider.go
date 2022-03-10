@@ -22,6 +22,8 @@ import (
 
 	tjconfig "github.com/crossplane/terrajet/pkg/config"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/crossplane-contrib/provider-jet-gitlab/config/project"
+	"github.com/crossplane-contrib/provider-jet-gitlab/config/branch"
 )
 
 const (
@@ -42,10 +44,16 @@ func GetProvider() *tjconfig.Provider {
 	}
 
 	pc := tjconfig.NewProviderWithSchema([]byte(providerSchema), resourcePrefix, modulePath,
-		tjconfig.WithDefaultResourceFn(defaultResourceFn))
+	    tjconfig.WithDefaultResourceFn(defaultResourceFn),
+	    tjconfig.WithIncludeList([]string{
+	        "gitlab_project$",
+  	      "gitlab_branch$",
+	    }))
 
 	for _, configure := range []func(provider *tjconfig.Provider){
 		// add custom config functions
+		project.Configure,
+    branch.Configure,
 	} {
 		configure(pc)
 	}

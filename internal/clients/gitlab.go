@@ -31,13 +31,16 @@ import (
 )
 
 const (
-	keyUsername = "username"
-	keyPassword = "password"
-	keyHost     = "host"
-
-	// GitLab credentials environment variable names
-	envUsername = "HASHICUPS_USERNAME"
-	envPassword = "HASHICUPS_PASSWORD"
+	// keyUsername = "username"
+	// keyPassword = "password"
+	// keyHost     = "host"
+	keyBaseUrl 	= "base_url"
+	keyToken		= "token"
+	// Git credentials environment variable names
+	// envUsername = "HASHICUPS_USERNAME"
+	// envPassword = "HASHICUPS_PASSWORD"
+	envBaseUrl	= "GITLAB_BASE_URL"
+	envToken		= "GITLAB_TOKEN"
 )
 
 const (
@@ -87,13 +90,13 @@ func TerraformSetupBuilder(version, providerSource, providerVersion string) terr
 		}
 
 		// set provider configuration
-		ps.Configuration = map[string]interface{}{
-			"host": gitlabCreds[keyHost],
-		}
+		// ps.Configuration = map[string]interface{}{
+		// 	"host": gitlabCreds[keyHost],
+		// }
 		// set environment variables for sensitive provider configuration
 		ps.Env = []string{
-			fmt.Sprintf(fmtEnvVar, envUsername, gitlabCreds[keyUsername]),
-			fmt.Sprintf(fmtEnvVar, envPassword, gitlabCreds[keyPassword]),
+			fmt.Sprintf(fmtEnvVar, envBaseUrl, gitlabCreds[keyBaseUrl]),
+			fmt.Sprintf(fmtEnvVar, envToken, gitlabCreds[keyToken]),
 		}
 		return ps, nil
 	}
