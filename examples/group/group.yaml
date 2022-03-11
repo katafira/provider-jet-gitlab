@@ -1,0 +1,11 @@
+apiVersion: group.gitlab.jet.crossplane.io/v1alpha1
+kind: Group
+metadata:
+  name: third-group-sample-tf
+spec:
+  forProvider:
+    name: actual-third-group-sample-name
+    path: actual-third-group-sample-name
+    parentId: 16764842
+  providerConfigRef:
+    name: default

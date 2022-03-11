@@ -5,7 +5,10 @@ cover.out
 /vendor
 /.vendor-new
 .DS_Store
-
+/apis/branch
+/apis/group
+/apis/project
+/apis/groupmembership
 # ignore IDE folders
 .vscode/
 .idea/

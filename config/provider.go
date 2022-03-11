@@ -24,6 +24,8 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/crossplane-contrib/provider-jet-gitlab/config/project"
 	"github.com/crossplane-contrib/provider-jet-gitlab/config/branch"
+	"github.com/crossplane-contrib/provider-jet-gitlab/config/group"
+	"github.com/crossplane-contrib/provider-jet-gitlab/config/groupmembership"
 )
 
 const (
@@ -48,12 +50,16 @@ func GetProvider() *tjconfig.Provider {
 	    tjconfig.WithIncludeList([]string{
 	        "gitlab_project$",
   	      "gitlab_branch$",
+					"gitlab_group$",
+					"gitlab_group_membership$",
 	    }))
 
 	for _, configure := range []func(provider *tjconfig.Provider){
 		// add custom config functions
 		project.Configure,
     branch.Configure,
+		group.Configure,
+		groupmembership.Configure,
 	} {
 		configure(pc)
 	}

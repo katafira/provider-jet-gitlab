@@ -22,6 +22,8 @@ import (
 	"github.com/crossplane/terrajet/pkg/controller"
 
 	branch "github.com/crossplane-contrib/provider-jet-gitlab/internal/controller/branch/branch"
+	group "github.com/crossplane-contrib/provider-jet-gitlab/internal/controller/group/group"
+	membership "github.com/crossplane-contrib/provider-jet-gitlab/internal/controller/groupmembership/membership"
 	project "github.com/crossplane-contrib/provider-jet-gitlab/internal/controller/project/project"
 	providerconfig "github.com/crossplane-contrib/provider-jet-gitlab/internal/controller/providerconfig"
 )
@@ -31,6 +33,8 @@ import (
 func Setup(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
 		branch.Setup,
+		group.Setup,
+		membership.Setup,
 		project.Setup,
 		providerconfig.Setup,
 	} {
