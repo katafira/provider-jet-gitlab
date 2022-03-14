@@ -1,0 +1,10 @@
+apiVersion: project.gitlab.jet.crossplane.io/v1alpha1
+kind: Project
+metadata:
+  name: poc1-project-tf
+spec:
+  forProvider:
+    name: poc1-project
+    description: "My POC project"
+  providerConfigRef:
+    name: default

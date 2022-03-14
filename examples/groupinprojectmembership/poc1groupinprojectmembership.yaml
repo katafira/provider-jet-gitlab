@@ -1,0 +1,11 @@
+apiVersion: groupinprojectmembership.gitlab.jet.crossplane.io/v1alpha1
+kind: ShareGroup
+metadata:
+  name: poc1-group-in-project-tf
+spec:
+  forProvider:
+    accessLevel: developer
+    groupId: 17035234
+    projectId: "34469527"
+  providerConfigRef:
+    name: default

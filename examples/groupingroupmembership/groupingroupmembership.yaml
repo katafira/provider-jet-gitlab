@@ -1,0 +1,11 @@
+apiVersion: groupingroupmembership.gitlab.jet.crossplane.io/v1alpha1
+kind: ShareGroup
+metadata:
+  name: group-in-group-sample-tf
+spec:
+  forProvider:
+    groupId: "17030778"
+    shareGroupId: 16947674
+    groupAccess: developer
+  providerConfigRef:
+    name: default

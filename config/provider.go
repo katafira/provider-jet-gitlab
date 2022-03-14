@@ -25,7 +25,11 @@ import (
 	"github.com/crossplane-contrib/provider-jet-gitlab/config/project"
 	"github.com/crossplane-contrib/provider-jet-gitlab/config/branch"
 	"github.com/crossplane-contrib/provider-jet-gitlab/config/group"
-	"github.com/crossplane-contrib/provider-jet-gitlab/config/groupmembership"
+	"github.com/crossplane-contrib/provider-jet-gitlab/config/useringroupmembership"
+	"github.com/crossplane-contrib/provider-jet-gitlab/config/groupinprojectmembership"
+	"github.com/crossplane-contrib/provider-jet-gitlab/config/groupingroupmembership"
+	"github.com/crossplane-contrib/provider-jet-gitlab/config/userinprojectmembership"
+	"github.com/crossplane-contrib/provider-jet-gitlab/config/user"
 )
 
 const (
@@ -52,6 +56,10 @@ func GetProvider() *tjconfig.Provider {
   	      "gitlab_branch$",
 					"gitlab_group$",
 					"gitlab_group_membership$",
+					"gitlab_project_share_group$",
+					"gitlab_group_share_group$",
+					"gitlab_project_membership$",
+					"gitlab_user$",
 	    }))
 
 	for _, configure := range []func(provider *tjconfig.Provider){
@@ -59,8 +67,12 @@ func GetProvider() *tjconfig.Provider {
 		project.Configure,
     branch.Configure,
 		group.Configure,
-		groupmembership.Configure,
-	} {
+		useringroupmembership.Configure,
+		groupinprojectmembership.Configure,
+		groupingroupmembership.Configure,
+		userinprojectmembership.Configure,
+		user.Configure,
+	}	{
 		configure(pc)
 	}
 
