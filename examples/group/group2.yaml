@@ -1,0 +1,11 @@
+apiVersion: group.gitlab.jet.crossplane.io/v1alpha1
+kind: Group
+metadata:
+  name: poc1-group-tf
+spec:
+  forProvider:
+    name: poc1-group
+    path: poc1-group
+    parentId: 16764842
+  providerConfigRef:
+    name: default

@@ -21,16 +21,30 @@ import (
 
 	"github.com/crossplane/terrajet/pkg/controller"
 
-	resource "github.com/crossplane-contrib/provider-jet-template/internal/controller/null/resource"
-	providerconfig "github.com/crossplane-contrib/provider-jet-template/internal/controller/providerconfig"
+	branch "github.com/crossplane-contrib/provider-jet-gitlab/internal/controller/branch/branch"
+	group "github.com/crossplane-contrib/provider-jet-gitlab/internal/controller/group/group"
+	sharegroup "github.com/crossplane-contrib/provider-jet-gitlab/internal/controller/groupingroupmembership/sharegroup"
+	sharegroupgroupinprojectmembership "github.com/crossplane-contrib/provider-jet-gitlab/internal/controller/groupinprojectmembership/sharegroup"
+	project "github.com/crossplane-contrib/provider-jet-gitlab/internal/controller/project/project"
+	providerconfig "github.com/crossplane-contrib/provider-jet-gitlab/internal/controller/providerconfig"
+	user "github.com/crossplane-contrib/provider-jet-gitlab/internal/controller/user/user"
+	membership "github.com/crossplane-contrib/provider-jet-gitlab/internal/controller/useringroupmembership/membership"
+	membershipuserinprojectmembership "github.com/crossplane-contrib/provider-jet-gitlab/internal/controller/userinprojectmembership/membership"
 )
 
 // Setup creates all controllers with the supplied logger and adds them to
 // the supplied manager.
 func Setup(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
-		resource.Setup,
+		branch.Setup,
+		group.Setup,
+		sharegroup.Setup,
+		sharegroupgroupinprojectmembership.Setup,
+		project.Setup,
 		providerconfig.Setup,
+		user.Setup,
+		membership.Setup,
+		membershipuserinprojectmembership.Setup,
 	} {
 		if err := setup(mgr, o); err != nil {
 			return err

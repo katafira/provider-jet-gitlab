@@ -1,0 +1,12 @@
+apiVersion: branch.gitlab.jet.crossplane.io/v1alpha1
+kind: Branch
+metadata:
+  name: poc1-branch-tf
+spec:
+  forProvider:
+    name: poc1-branch
+    ref: main
+    projectRef:
+      name: poc1-project-tf
+  providerConfigRef:
+    name: default

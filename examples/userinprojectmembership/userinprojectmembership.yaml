@@ -1,0 +1,11 @@
+apiVersion: userinprojectmembership.gitlab.jet.crossplane.io/v1alpha1
+kind: Membership
+metadata:
+  name: poc1-user-in-project-tf
+spec:
+  forProvider:
+    accessLevel: developer
+    projectId: "34469527"
+    userIdRef: poc1-kataf-tf
+  providerConfigRef:
+    name: default

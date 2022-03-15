@@ -22,14 +22,28 @@ package apis
 import (
 	"k8s.io/apimachinery/pkg/runtime"
 
-	v1alpha1 "github.com/crossplane-contrib/provider-jet-template/apis/null/v1alpha1"
-	v1alpha1apis "github.com/crossplane-contrib/provider-jet-template/apis/v1alpha1"
+	v1alpha1 "github.com/crossplane-contrib/provider-jet-gitlab/apis/branch/v1alpha1"
+	v1alpha1group "github.com/crossplane-contrib/provider-jet-gitlab/apis/group/v1alpha1"
+	v1alpha1groupingroupmembership "github.com/crossplane-contrib/provider-jet-gitlab/apis/groupingroupmembership/v1alpha1"
+	v1alpha1groupinprojectmembership "github.com/crossplane-contrib/provider-jet-gitlab/apis/groupinprojectmembership/v1alpha1"
+	v1alpha1project "github.com/crossplane-contrib/provider-jet-gitlab/apis/project/v1alpha1"
+	v1alpha1user "github.com/crossplane-contrib/provider-jet-gitlab/apis/user/v1alpha1"
+	v1alpha1useringroupmembership "github.com/crossplane-contrib/provider-jet-gitlab/apis/useringroupmembership/v1alpha1"
+	v1alpha1userinprojectmembership "github.com/crossplane-contrib/provider-jet-gitlab/apis/userinprojectmembership/v1alpha1"
+	v1alpha1apis "github.com/crossplane-contrib/provider-jet-gitlab/apis/v1alpha1"
 )
 
 func init() {
 	// Register the types with the Scheme so the components can map objects to GroupVersionKinds and back
 	AddToSchemes = append(AddToSchemes,
 		v1alpha1.SchemeBuilder.AddToScheme,
+		v1alpha1group.SchemeBuilder.AddToScheme,
+		v1alpha1groupingroupmembership.SchemeBuilder.AddToScheme,
+		v1alpha1groupinprojectmembership.SchemeBuilder.AddToScheme,
+		v1alpha1project.SchemeBuilder.AddToScheme,
+		v1alpha1user.SchemeBuilder.AddToScheme,
+		v1alpha1useringroupmembership.SchemeBuilder.AddToScheme,
+		v1alpha1userinprojectmembership.SchemeBuilder.AddToScheme,
 		v1alpha1apis.SchemeBuilder.AddToScheme,
 	)
 }

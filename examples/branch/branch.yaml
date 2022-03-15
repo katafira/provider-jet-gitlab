@@ -1,0 +1,12 @@
+apiVersion: branch.gitlab.jet.crossplane.io/v1alpha1
+kind: Branch
+metadata:
+  name: first-branch-sample-tf
+spec:
+  forProvider:
+    name: actual-first-branch-sample-name
+    ref: main
+    projectRef:
+      name: first-project-sample-tf
+  providerConfigRef:
+    name: default

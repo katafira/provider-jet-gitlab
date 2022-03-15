@@ -1,0 +1,11 @@
+apiVersion: useringroupmembership.gitlab.jet.crossplane.io/v1alpha1
+kind: Membership
+metadata:
+  name: poc1-group-member-tf
+spec:
+  forProvider:
+    accessLevel: developer
+    groupId: "17035234"
+    userId: 7055121
+  providerConfigRef:
+    name: default
